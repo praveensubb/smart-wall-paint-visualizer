@@ -1,0 +1,38 @@
+<nav class="navbar glass-panel">
+  <div class="container flex justify-between items-center h-full">
+    <a routerLink="/" class="logo flex items-center gap-2">
+      <div class="logo-mark"></div>
+      SmartPaint
+    </a>
+    
+    <div class="nav-links flex items-center gap-6">
+      <a routerLink="/guide" class="nav-item">How it works</a>
+      
+      <ng-container *ngIf="authService.isAuthenticated(); else guestLinks">
+        <a routerLink="/dashboard" class="nav-item">Dashboard</a>
+        <a routerLink="/saved" class="nav-item">Gallery</a>
+        <a *ngIf="authService.isAdmin()" routerLink="/admin" class="nav-item">Admin</a>
+        
+        <div class="user-menu flex items-center gap-4 ml-4 pl-4 border-l">
+          <button (click)="toggleTheme()" class="btn-ghost icon-btn" title="Toggle Theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <div class="avatar">{{ authService.currentUser()?.name?.charAt(0) || 'U' }}</div>
+          <button (click)="logout()" class="btn btn-outline btn-sm">Log out</button>
+        </div>
+      </ng-container>
+      
+      <ng-template #guestLinks>
+        <button (click)="toggleTheme()" class="btn-ghost icon-btn" title="Toggle Theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <a routerLink="/login" class="nav-item font-medium">Sign in</a>
+        <a routerLink="/register" class="btn btn-primary">Get Started</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+
+<main class="animate-enter">
+  <router-outlet></router-outlet>
+</main>
